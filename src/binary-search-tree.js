@@ -37,9 +37,24 @@ class BinarySearchTree {
     }
   }
 
-  has(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  has(data) {
+    return search(this.rootVar, data);
+
+    function search(node, data) {
+      if (!node) {
+        return false;
+      }
+
+      if (node.data === data) {
+        return true;
+      }
+
+      if (data < node.data) {
+        return search(node.left, data);
+      } else {
+        return search(node.right, data);
+      }
+    }
   }
 
   find(/* data */) {
@@ -47,19 +62,68 @@ class BinarySearchTree {
     // remove line with error and write your code here
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+    this.rootVar = removeElement(this.rootVar, data);
+
+    function removeElement(node, data) {
+      if (!node) {
+        return null;
+      }
+
+      if (data < node.data) {
+        node.left = removeElement(node.left, data);
+        return node;
+      } else if (node.data < data) {
+        node.right = removeElement(node.right, data);
+        return node;
+        } else {
+        if (!node.left && !node.right) {
+          return null;
+        }
+
+        if (!node.left) {
+          node = node.right;
+          return node;
+        }
+
+        if (!node.right) {
+          node = node.left;
+          return node;
+        }
+
+        let maxLeftSide = node.right;
+        while (maxLeftSide.left) {
+          maxLeftSide = maxLeftSide.left
+        }
+        node.data = maxLeftSide.data;
+        node.rigt = removeElement(node.right, maxLeftSide.data);
+        return node;
+      }
+    }
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this.rootVar) {
+      return;
+    }
+
+    let node = this.rootVar;
+    while (node.left) {
+      node = node.left;
+    }
+    return node.data;
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this.rootVar) {
+      return;
+    }
+
+    let node = this.rootVar;
+    while (node.right) {
+      node = node.right;
+    }
+    return node.data;
   }
 }
 
