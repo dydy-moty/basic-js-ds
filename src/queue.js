@@ -14,41 +14,36 @@ const { ListNode } = require('../extensions/list-node.js');
  * queue.getUnderlyingList() // returns { value: 3, next: null }
  */
 class Queue {
-  // constructor() {
-  //   this.head = this.tail = null;
-  //   this.length = 0;
-  // }
+  constructor() {
+    this.head = this.tail = null;
+  }
 
   getUnderlyingList() {
-    throw new NotImplementedError('Not implemented');
-      // return this.head;
+      return this.head;
   }
 
   enqueue(value) {
-    throw new NotImplementedError('Not implemented');
-    // if (this.head === 0) {
-    //   this.head = new ListNode(value);
-    // } else {
-    //   let current = this.head;
-    //
-    //   if (current.next) {
-    //     current = current.next
-    //   }
-    //
-    //   current.next = new ListNode(value);
-    // }
-    // this.length += 1;
+    if (!this.tail) {
+      this.tail = this.head = new ListNode(value);
+    } else {
+      let newElement = this.tail;
+      this.tail = new ListNode(value);
+      newElement.next = this.tail;
+    }
   }
 
   dequeue() {
-    throw new NotImplementedError('Not implemented');
-    // if (this.head) {
-    //   this.head = this.head.next;
-    // }
-    //
-    // let value = this.head.value;
-    // return value;
-    //   this.length -= 1;
+    if (!this.head) {
+      return null;
+    } else {
+      let head = this.head;
+        if (this.head === this.tail) {
+          this.head = this.tail = null;
+        } else {
+          this.head = this.head.next;
+        }
+      return head.value;
+    }
   }
 }
 
